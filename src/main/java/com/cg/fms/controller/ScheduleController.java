@@ -4,6 +4,8 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,10 +31,13 @@ public class ScheduleController {
 	@Autowired
 	IScheduleService service;
 	
+	Logger logger = LoggerFactory.getLogger(ScheduleController.class);
+	
 	@PostMapping("/addschedule")
 	public ResponseEntity<Object> addSchedule(@Valid @RequestBody Schedule schedule){
 		try {
 			Schedule obj = service.addSchedule(schedule);
+			logger.info("Added new schedule to the database");
 			return new ResponseEntity<Object>(obj, HttpStatus.OK);
 		}
 		catch (Exception e) {
@@ -44,9 +49,11 @@ public class ScheduleController {
 	public ResponseEntity<Object> viewAll(){
 		try {
 			List<Schedule> obj = service.viewAll();
+			logger.info("Accessed data from Schedule Table");
 			return new ResponseEntity<Object>(obj, HttpStatus.OK);
 		}
 		catch (Exception e) {
+			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
 	}
@@ -55,9 +62,11 @@ public class ScheduleController {
 	public ResponseEntity<Object> viewById(@RequestParam int id){
 		try {
 			Schedule obj = service.viewById(id);
+			logger.info("Accessed schedule data for id: "+id);
 			return new ResponseEntity<Object>(obj, HttpStatus.OK);
 		}
 		catch (Exception e) {
+			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
 	}
@@ -66,9 +75,11 @@ public class ScheduleController {
 	public ResponseEntity<Object> delete(@RequestParam int id){
 		try {
 			service.delete(id);
+			logger.info("Deleted schedule for id: "+id);
 			return new ResponseEntity<Object>("Deleted", HttpStatus.OK);
 		}
 		catch (Exception e) {
+			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
 	}
@@ -76,10 +87,12 @@ public class ScheduleController {
 	@PutMapping("/update")
 	public ResponseEntity<Object> update(@Valid @RequestBody Schedule schedule){
 		try {
-			Schedule obj = service.addSchedule(schedule);
+			Schedule obj = service.update(schedule);
+			logger.info("Updated schedule for id: "+schedule.getId());
 			return new ResponseEntity<Object>(obj, HttpStatus.OK);
 		}
 		catch (Exception e) {
+			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
 		}
 	}

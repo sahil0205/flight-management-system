@@ -19,75 +19,80 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.cg.fms.entities.Passenger;
-import com.cg.fms.service.IPassengerService;
-
+import com.cg.fms.entities.Booking;
+import com.cg.fms.entities.Flight;
 import com.cg.fms.exceptions.Exception;
+import com.cg.fms.service.IBookingService;
 
 @CrossOrigin(origins = "http://localhost:3000")
 @RestController
-@RequestMapping("/fms/passenger")
-public class PassengerController {
-
-	@Autowired
-	IPassengerService service;
+@RequestMapping("/fms/booking")
+public class BookingController {
 	
-	Logger logger = LoggerFactory.getLogger(PassengerController.class);
-
-	@PostMapping("/addpass")
-	ResponseEntity<Object> addPass(@Valid @RequestBody Passenger passenger) {
+	@Autowired
+	IBookingService service;
+	
+	Logger logger = LoggerFactory.getLogger(BookingController.class);
+	
+	@PostMapping("/addbooking")
+	public ResponseEntity<Object> addFlight(@Valid @RequestBody Booking booking){
 		try {
-			Passenger data = service.addPassenger(passenger);
-			logger.info("Added new passesnger");
-			return new ResponseEntity<Object>(data, HttpStatus.OK);
-		} catch (Exception e) {
+			Booking bookingData = service.addBooking(booking);
+			logger.info("New booking added for: "+booking.getUserId().getUserName());
+			return new ResponseEntity<Object>(bookingData, HttpStatus.OK);
+		}
+		catch (Exception e) {
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@GetMapping("/viewall")
-	ResponseEntity<Object> viewAllPass() {
+	public ResponseEntity<Object> viewAll(){
 		try {
-			List<Passenger> data = service.viewAll();
-			logger.info("Accessed Passenger data from database");
-			return new ResponseEntity<Object>(data, HttpStatus.OK);
-		} catch (Exception e) {
+			List<Booking> bookingData = service.viewAll();
+			logger.info("Accessed data from Booking Database");
+			return new ResponseEntity<Object>(bookingData, HttpStatus.OK);
+		}
+		catch (Exception e) {
 			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@GetMapping("/viewbyid/{id}")
-	ResponseEntity<Object> viewbyId(@RequestParam int id) {
+	public ResponseEntity<Object> viewById(@RequestParam int id){
 		try {
-			Passenger data = service.viewById(id);
-			logger.info("Accessed passenger details for PRN: "+id);
-			return new ResponseEntity<Object>(data, HttpStatus.OK);
-		} catch (Exception e) {
+			Booking bookingData = service.viewById(id);
+			logger.info("Accessed Booking data for id: "+id);
+			return new ResponseEntity<Object>(bookingData, HttpStatus.OK);
+		}
+		catch (Exception e) {
 			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@DeleteMapping("/delete/{id}")
-	ResponseEntity<Object> delete(@RequestParam int id) {
+	public ResponseEntity<Object> delete(@RequestParam int id){
 		try {
-			service.delete(id);
-			logger.info("Deleted passenger details for PRN: "+id);
-			return new ResponseEntity<Object>("Deleted", HttpStatus.OK);
-		} catch (Exception e) {
+			 service.delete(id);
+			 logger.info("Deleted Booking data");
+			return new ResponseEntity<Object>("Deleted Booking data", HttpStatus.OK);
+		}
+		catch (Exception e) {
 			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
-
+	
 	@PutMapping("/update")
-	ResponseEntity<Object> update(@Valid @RequestBody Passenger passenger) {
+	public ResponseEntity<Object> update(@Valid @RequestBody Booking booking){
 		try {
-			Passenger data = service.update(passenger);
-			logger.info("Updated passenger details for PRN: "+passenger.getPrn());
-			return new ResponseEntity<Object>(data, HttpStatus.OK);
-		} catch (Exception e) {
+			Booking bookingData = service.update(booking);
+			logger.info("Updated Booking Data for: "+booking.getUserId().getUserName());
+			return new ResponseEntity<Object>(bookingData, HttpStatus.OK);
+		}
+		catch (Exception e) {
 			logger.error(e.getMessage());
 			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
