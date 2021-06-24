@@ -9,6 +9,7 @@ import javax.persistence.Table;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "user_table")
@@ -17,21 +18,26 @@ public class User {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Id")
 	private int userId;
-	@NotNull(message = "User Type should not be empty")
+	@NotNull
+	@Size(min = 1, message = "User Type should not be empty")
 	@Column(name = "Type")
 	private String userType;
-	@NotNull(message = "User Name should not be empty")
+	@NotNull
+	@Size(min = 1, message= "User Name should not be empty")
 	@Column(name = "Name")
 	private String userName;
-	@NotNull(message = "Password should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Password should not be empty")
 	@Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d)(?=.*[@$!%*?&])[A-Za-z\\d@$!%*?&]{8,}$", message = "Password should contain minimum 8 characters, atleast one digit, uppecase, lower case and special character")
 	@Column(name = "Password")
 	private String password;
-	@NotNull(message = "Email should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Email should not be empty")
 	@Email(message = "Email Id should be valid")
 	@Column(name = "Email")
 	private String email;
-	@NotNull(message = "Mobile Number should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Mobile Number should not be empty")
 	@Pattern(regexp = "^\\d{10}$", message = "Enter valid mobile number")
 	@Column(name = "Mobile")
 	private String mobileNumber;

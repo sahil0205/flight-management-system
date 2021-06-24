@@ -7,6 +7,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "airport_table")
@@ -15,13 +16,16 @@ public class Airport {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private int id;
-	@NotNull(message = "Airport Code should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Airport Code should not be empty")
 	@Column(name = "Code")
 	private String airportCode;
-	@NotNull(message = "Airport Name should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Airport Name should not be empty")
 	@Column(name = "Name")
 	private String airportName;
-	@NotNull(message = "Airport Location should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Airport Location should not be empty")
 	@Column(name = "Location")
 	private String airportLocation;
 	public int getId() {

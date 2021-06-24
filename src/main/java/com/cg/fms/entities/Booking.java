@@ -15,7 +15,9 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.FutureOrPresent;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "booking_table")
@@ -33,12 +35,14 @@ public class Booking {
 	@OneToMany(cascade = CascadeType.MERGE, targetEntity = Passenger.class, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Booking_Id", referencedColumnName = "Booking_Id")
 	private List<Passenger> passengerList;
-	@NotNull(message = "Cost should not be empty")
+	@NotNull
+	@Min(value = 1, message = "Cost should not be empty")
 	@Column(name = "Cost")
 	private double cost;
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	private Flight flight;
-	@NotNull(message = "Enter no of passengers")
+	@NotNull
+	@Min(value = 1, message = "Enter no of passengers")
 	@Column(name = "No_of_Passengers")
 	private int noOfPassengers;
 

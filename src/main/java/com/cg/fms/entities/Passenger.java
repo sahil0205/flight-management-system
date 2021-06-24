@@ -6,7 +6,9 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "passenger_table")
@@ -15,13 +17,16 @@ public class Passenger {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "PRN")
 	private int prn;
-	@NotNull(message = "Name should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Name should not be empty")
 	@Column(name = "Name")
 	private String passengerName;
-	@NotNull(message = "Age cannot be empty")
+	@NotNull
+	@Min(value = 1, message = "Age cannot be empty")
 	@Column(name = "Age")
 	private int age;
-	@NotNull(message = "UIN cannot be empty")
+	@NotNull
+	@Min(value = 1, message = "UIN cannot be empty")
 	@Column(name = "UIN")
 	private int uin;
 	private boolean luggage;

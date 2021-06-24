@@ -6,7 +6,11 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import javax.validation.constraints.Min;
+
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "flight_table")
@@ -15,13 +19,16 @@ public class Flight {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Column(name = "Flight_Number")
 	private int flightNumber;
-	@NotNull(message = "Carrier Name should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Carrier Name should not be empty")
 	@Column(name = "Carrier")
 	private String carrierName;
-	@NotNull(message = "Flight Model should not be empty")
+	@NotNull
+	@Size(min = 1, message = "Flight Model should not be empty")
 	@Column(name = "Model")
 	private String flightModel;
-	@NotNull(message = "Please fill the capacity")
+	@Min(value = 1, message = "Enter capacity more than minimum")
+	@NotNull
 	@Column(name = "Capacity")
 	private int seatCapacity;
 	public int getFlightNumber() {
@@ -53,20 +60,20 @@ public class Flight {
 	}
 	public Flight(@NotNull(message = "Carrier Name should not be empty") String carrierName,
 			@NotNull(message = "Flight Model should not be empty") String flightModel,
-			@NotNull(message = "Please fill the capacity") int seatCapacity) {
+			@Min(value = 1, message = "Enter capacity more than minimum") int seatCapacity) {
 		super();
 		this.carrierName = carrierName;
 		this.flightModel = flightModel;
 		this.seatCapacity = seatCapacity;
 	}
-
 	public Flight(int flightNumber, @NotNull(message = "Carrier Name should not be empty") String carrierName,
 			@NotNull(message = "Flight Model should not be empty") String flightModel,
-			@NotNull(message = "Please fill the capacity") int seatCapacity) {
+			@Min(value = 1, message = "Enter capacity more than minimum") int seatCapacity) {
 		super();
 		this.flightNumber = flightNumber;
 		this.carrierName = carrierName;
 		this.flightModel = flightModel;
 		this.seatCapacity = seatCapacity;
 	}
+	
 }

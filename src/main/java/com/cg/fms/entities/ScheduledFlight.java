@@ -10,7 +10,9 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 @Entity
 @Table(name = "scheduled_flight_table")
@@ -21,7 +23,8 @@ public class ScheduledFlight {
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
 	@JoinColumn(name = "Flight")
 	private Flight flight;
-	@NotNull(message = "Enter available seats")
+	@NotNull
+	@Min(value = 1, message = "Enter available seats")
 	@Column(name = "Available_Seats")
 	private int availabeSeats;
 	@OneToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
