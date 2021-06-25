@@ -2,6 +2,7 @@ package com.cg.fms.service;
 
 import java.util.List;
 
+import com.cg.fms.entities.Airport;
 import com.cg.fms.entities.Schedule;
 import com.cg.fms.exceptions.Exception;
 
@@ -15,4 +16,6 @@ public interface IScheduleService {
 	public void delete(int id) throws Exception;
 
 	public Schedule update(Schedule schedule) throws Exception;
+	
+	public List<Schedule> viewBySourceAndDestination(String source, String destination) throws Exception;
 }

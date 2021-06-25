@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.cg.fms.entities.Airport;
 import com.cg.fms.entities.Schedule;
 import com.cg.fms.exceptions.Exception;
 
@@ -18,6 +19,9 @@ public class ScheduleService implements IScheduleService {
 
 	@Autowired
 	IScheduleRepository repository;
+	
+	@Autowired
+	IAirportRepository airportRepo;
 	
 	Logger logger = LoggerFactory.getLogger(ScheduleService.class);
 
@@ -63,6 +67,15 @@ public class ScheduleService implements IScheduleService {
 			return repository.save(schedule);
 		else
 			throw new Exception("Cannot update schedule, as no schedule found for id: "+schedule.getId());
+	}
+
+	@Override
+	public List<Schedule> viewBySourceAndDestination(String source, String destination) throws Exception {
+		List<Schedule> list = repository.findBySourceAndDestination(airportRepo.findByAirportName(source), airportRepo.findByAirportName(destination));
+		if(list.isEmpty())
+			throw new Exception("No Schedule found between "+source+" and "+destination);
+		else
+			return list;
 	}
 
 }

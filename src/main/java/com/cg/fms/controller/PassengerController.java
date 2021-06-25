@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -58,7 +59,7 @@ public class PassengerController {
 	}
 
 	@GetMapping("/viewbyid/{id}")
-	ResponseEntity<Object> viewbyId(@RequestParam int id) {
+	ResponseEntity<Object> viewbyId(@PathVariable int id) {
 		try {
 			Passenger data = service.viewById(id);
 			logger.info("Accessed passenger details for PRN: "+id);
@@ -70,7 +71,7 @@ public class PassengerController {
 	}
 
 	@DeleteMapping("/delete/{id}")
-	ResponseEntity<Object> delete(@RequestParam int id) {
+	ResponseEntity<Object> delete(@PathVariable int id) {
 		try {
 			service.delete(id);
 			logger.info("Deleted passenger details for PRN: "+id);

@@ -16,4 +16,5 @@ public interface IScheduledFlightService {
 	public void delete(int id) throws Exception;
 
 	public ScheduledFlight update(ScheduledFlight scheduledFlight) throws Exception;
+	
 }

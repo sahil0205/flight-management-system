@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.cg.fms.entities.Airport;
 import com.cg.fms.entities.Schedule;
 import com.cg.fms.exceptions.Exception;
 import com.cg.fms.service.IScheduleService;
@@ -59,7 +61,7 @@ public class ScheduleController {
 	}
 	
 	@GetMapping("/viewbyid/{id}")
-	public ResponseEntity<Object> viewById(@RequestParam int id){
+	public ResponseEntity<Object> viewById(@PathVariable int id){
 		try {
 			Schedule obj = service.viewById(id);
 			logger.info("Accessed schedule data for id: "+id);
@@ -72,7 +74,7 @@ public class ScheduleController {
 	}
 	
 	@DeleteMapping("/delete/{id}")
-	public ResponseEntity<Object> delete(@RequestParam int id){
+	public ResponseEntity<Object> delete(@PathVariable int id){
 		try {
 			service.delete(id);
 			logger.info("Deleted schedule for id: "+id);
@@ -90,6 +92,19 @@ public class ScheduleController {
 			Schedule obj = service.update(schedule);
 			logger.info("Updated schedule for id: "+schedule.getId());
 			return new ResponseEntity<Object>(obj, HttpStatus.OK);
+		}
+		catch (Exception e) {
+			logger.error(e.getMessage());
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+		}
+	}
+	
+	@GetMapping("/viewbysrcanddest")
+	public ResponseEntity<Object> viewBySrcAndDest(@RequestParam String source, @RequestParam String destination){
+		try {
+			List<Schedule> list = service.viewBySourceAndDestination(source, destination);
+			logger.info("Accessed schedule data between "+source+" and "+destination);
+			return new ResponseEntity<Object>(list, HttpStatus.OK);
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
