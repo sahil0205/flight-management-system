@@ -43,7 +43,7 @@ public class ScheduleController {
 			return new ResponseEntity<Object>(obj, HttpStatus.OK);
 		}
 		catch (Exception e) {
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -56,7 +56,7 @@ public class ScheduleController {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			return new ResponseEntity<Object>(e.getMessage(),HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -69,7 +69,7 @@ public class ScheduleController {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -82,7 +82,7 @@ public class ScheduleController {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
@@ -95,12 +95,12 @@ public class ScheduleController {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 	
-	@GetMapping("/viewbysrcanddest")
-	public ResponseEntity<Object> viewBySrcAndDest(@RequestParam String source, @RequestParam String destination){
+	@GetMapping("/viewbysrcanddest/{source}/{destination}")
+	public ResponseEntity<Object> viewBySrcAndDest(@PathVariable int source, @PathVariable int destination){
 		try {
 			List<Schedule> list = service.viewBySourceAndDestination(source, destination);
 			logger.info("Accessed schedule data between "+source+" and "+destination);
@@ -108,7 +108,7 @@ public class ScheduleController {
 		}
 		catch (Exception e) {
 			logger.error(e.getMessage());
-			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.OK);
+			return new ResponseEntity<Object>(e.getMessage(), HttpStatus.BAD_REQUEST);
 		}
 	}
 }

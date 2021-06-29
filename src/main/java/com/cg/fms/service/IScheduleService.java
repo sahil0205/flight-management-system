@@ -17,5 +17,5 @@ public interface IScheduleService {
 
 	public Schedule update(Schedule schedule) throws Exception;
 	
-	public List<Schedule> viewBySourceAndDestination(String source, String destination) throws Exception;
+	public List<Schedule> viewBySourceAndDestination(int source, int destination) throws Exception;
 }

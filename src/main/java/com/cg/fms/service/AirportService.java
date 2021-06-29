@@ -44,7 +44,7 @@ public class AirportService implements IAirportService {
 	public Airport viewById(int airportId) throws Exception {
 		logger.info("Accessing Airport data for id: "+airportId);
 		if(repository.existsById(airportId)) {
-			return repository.findById(airportId).get();
+			return repository.findById(airportId);
 		}
 		else {
 			throw new Exception("No airport found for id: "+airportId);

@@ -70,8 +70,8 @@ public class ScheduleService implements IScheduleService {
 	}
 
 	@Override
-	public List<Schedule> viewBySourceAndDestination(String source, String destination) throws Exception {
-		List<Schedule> list = repository.findBySourceAndDestination(airportRepo.findByAirportName(source), airportRepo.findByAirportName(destination));
+	public List<Schedule> viewBySourceAndDestination(int source, int destination) throws Exception {
+		List<Schedule> list = repository.findBySourceAndDestination(airportRepo.findById(source), airportRepo.findById(destination));
 		if(list.isEmpty())
 			throw new Exception("No Schedule found between "+source+" and "+destination);
 		else
